@@ -149,30 +149,60 @@ class User extends Database
 	{
 		$db = new Database();
 
+
 		//check if user exists...
 		$sql = "SELECT COUNT(ID) AS num FROM user WHERE name='".$db->escapeString($username)."'";
 		$result = $db->query($sql);
 
 		$row = $db->fetchAssoc($result);
 
-		if($row->num == 0)
-		{
-			//execute insert...
-		}
-		else
-		{
-			return null; //user exists already!
-		}
+                $sql = "SELECT * FROM user WHERE name='".$username."'";
+                $result = $db->query($sql);
+                if($db->numRows($result) > 0) //anzahl zeilen mehr als 0
+                {
+        //kein while nötig – wir wissen es gibt nur einen Wert. Mehre Zeilen könnte man
+        //mit while($row = $db->fetchAssoc($result)) //herausholen
+                    $row = $db->fetchAssoc($result);
+        //fetch Assoc heißt man greift auf die Spalten wie folgt zu:
+        //$row['spaltenname'];
+        //fetchObject würde heißen man greift auf die Spalten so zu:
+        //$row->spaltenname;
+        //In Java und JavaScript greifen Sie Objektorientiert mittels . zu
+        //z.B. row.spaltenname. Das ist in PHP anders.
+                    if(password_verify("testpassword", $row['password']))
+                    {
+                        echo "Der Nutzer ".$username." mit der ID ".$row['id']." hat";
+                        echo " das Passwort testpassword";
+                    }
+                    else
+                    {
+                        echo "Nutzer gefunden aber falsches Passwort!";
+                    }
+        }
+        else
+        {
+            echo "Keinen Nutzer gefunden";
+        }
 	}
 
 	public static function deleteUser($id)
 	{
-		//@TODO
+        $db = new Database();
+        $sql = "DELETE FROM table user";
+        $result = $db->query($sql);
+
+        $row = $db->fetchAssoc($result);
+
 	}
 
 	public static function updateUser($id, $data)
 	{
-		//@TODO
+        $db = new Database();
+        $neuerusername = "";
+        $sql = "UPDATE user SET username = neuerusername";
+        $result = $db->query($sql);
+
+        $row = $db->fetchAssoc($result);
 	}
 
 	public function delete()

@@ -2,14 +2,14 @@
     require_once('includes/classes/Database.php');
 
     define('DB_HOST', 'localhost');
-    define('DB_NAME', 'testdatabase');
-    define('DB_USER', 'testuser');
-    define('DB_PASS', 'testpass');
+    define('DB_NAME', 'hausuebung06');
+    define('DB_USER', 'awaibl');
+    define('DB_PASS', 'aa2a8A3b');
 
     $db = new Database();
 
     $name = 'test';
-    $password = 'testpassowrd';
+    $password = 'testpassword';
 
     password_hash(password);
 
